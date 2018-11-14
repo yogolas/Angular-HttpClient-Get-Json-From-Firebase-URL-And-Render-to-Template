@@ -1,45 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+
+
 
 @Component({
   selector: 'app-panel',
-  template: `
-
-  <div *ngFor="let x of datapanel" class="col-md-6">
-
-  <div class="panel panel-default">
-    <div class="panel-body">
-
-<h1>{{x.name}}</h1>
-
-    </div>
-  </div>
-
-</div>
-
-
-
-    `
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.css']
 })
+
+
 export class PanelComponent implements OnInit {
 
-  constructor() { }
+  datapanel: any;
 
-  ngOnInit() {
+  constructor(private http: HttpClient) {
   }
 
-  datapanel = [
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'},
-    {name: 'A'}
-  ];
+  ngOnInit(): void {
+    this.http.get('https://yogolas-angulario-get-hero.firebaseio.com/.json').subscribe(data => {
+      console.log(data);
+      this.datapanel = data;
+    });
+  }
+
 
 }
